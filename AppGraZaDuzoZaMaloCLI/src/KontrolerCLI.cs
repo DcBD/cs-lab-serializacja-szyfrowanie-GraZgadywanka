@@ -53,12 +53,16 @@ namespace AppGraZaDuzoZaMaloCLI
                 {
                     propozycja = widok.WczytajPropozycje();
                 }
-                catch( KoniecGryException)
+                catch(KoniecGryException)
                 {
                     gra.Przerwij();
+
                 }
 
+
                 Console.WriteLine(propozycja);
+  
+
 
                 if (gra.StatusGry == Gra.Status.Poddana) break;
 

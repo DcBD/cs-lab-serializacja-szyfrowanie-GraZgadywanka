@@ -29,7 +29,7 @@ namespace AppGraZaDuzoZaMaloCLI
                 try
                 {
                     string value = ReadLine().TrimStart().ToUpper();
-                    if (value.Length > 0 && value[0].Equals(ZNAK_ZAKONCZENIA_GRY))
+                    if (value.Length > 0 && Char.ToUpper(value[0]).Equals(ZNAK_ZAKONCZENIA_GRY))
                         throw new KoniecGryException();
 
                     //UWAGA: ponizej może zostać zgłoszony wyjątek 
@@ -45,6 +45,10 @@ namespace AppGraZaDuzoZaMaloCLI
                 {
                     WriteLine("Przesadziłeś. Podana przez Ciebie wartość jest zła! Spróbuj raz jeszcze.");
                     continue;
+                }
+                catch (KoniecGryException e)
+                {
+                    throw e;
                 }
                 catch (Exception)
                 {
