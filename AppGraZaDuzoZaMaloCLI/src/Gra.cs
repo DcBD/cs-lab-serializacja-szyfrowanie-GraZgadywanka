@@ -45,6 +45,7 @@ namespace GraZaDuzoZaMalo.Model
     /// Pojedynczy Ruch
     /// </para>
     /// </remarks>
+    [Serializable]
     public class Gra
     {
         /// <summary>
@@ -88,10 +89,12 @@ namespace GraZaDuzoZaMalo.Model
         /// <para>Zmiana wartości zmiennej na <see cref="Gra.Status.Poddana"/> po uruchomieniu metody <see cref="Przerwij"/>.</para>
         /// <para>Zmiana wartości zmiennej na <see cref="Gra.Status.Zakonczona"/> w metodzie <see cref="Propozycja(int)"/>, po podaniu poprawnej, odgadywanej liczby.</para>
         /// </remarks>
+        [field: NonSerialized]
         public Status StatusGry { get; private set; }
 
 
         private List<Ruch> listaRuchow;
+
 
         public IReadOnlyList<Ruch> ListaRuchow { get { return listaRuchow.AsReadOnly(); } }
 
@@ -176,6 +179,7 @@ namespace GraZaDuzoZaMalo.Model
             ZaDuzo = 1
         };
 
+        [Serializable]
         public class Ruch
         {
             public int? Liczba { get; }

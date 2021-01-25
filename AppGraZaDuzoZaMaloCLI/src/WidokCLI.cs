@@ -7,6 +7,8 @@ using static System.Console;
 
 namespace AppGraZaDuzoZaMaloCLI
 {
+
+    [Serializable]
     class WidokCLI
     {
         public const char ZNAK_ZAKONCZENIA_GRY = 'X';

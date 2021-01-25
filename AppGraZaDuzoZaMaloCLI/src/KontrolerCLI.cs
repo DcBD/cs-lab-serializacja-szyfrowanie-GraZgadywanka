@@ -1,41 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using GraZaDuzoZaMalo.Model;
+
 using static GraZaDuzoZaMalo.Model.Gra.Odpowiedz;
 
 namespace AppGraZaDuzoZaMaloCLI
 {
+    [Serializable]
     public class KontrolerCLI
     {
         public const char ZNAK_ZAKONCZENIA_GRY = 'X';
+        public const string SAVE_FILENAME = @"./ZaDuzoZaMalo.bin";
 
         private Gra gra;
+
+
+     
         private WidokCLI widok;
 
+
         public int MinZakres { get; private set; } = 1;
+
         public int MaxZakres { get; private set; } = 100;
 
-        public IReadOnlyList<Gra.Ruch> ListaRuchow {
+        private bool CanLoadGame => File.Exists(SAVE_FILENAME);
+
+
+        public IReadOnlyList<Gra.Ruch> ListaRuchow
+        {
+           
             get
-            { return gra.ListaRuchow;  }
- }
+            { return gra.ListaRuchow; }
+        }
 
         public KontrolerCLI()
         {
+
             gra = new Gra();
+
+
             widok = new WidokCLI(this);
         }
 
         public void Uruchom()
         {
             widok.OpisGry();
-            while( widok.ChceszKontynuowac("Czy chcesz kontynuować aplikację (t/n)? ") )
+            widok.HistoriaGry();
+            while (widok.ChceszKontynuowac("Czy chcesz kontynuować aplikację (t/n)? "))
                 UruchomRozgrywke();
         }
+
+        public void ZapiszRozgrywke()
+        {
+            Console.WriteLine("Zapisywanie rozgrywki..");
+            IFormatter formatter = new BinaryFormatter();
+            using (Stream stream = new FileStream(SAVE_FILENAME, FileMode.Create, FileAccess.Write))
+            {
+                formatter.Serialize(stream, this);
+            }
+
+        }
+
+        
 
         public void UruchomRozgrywke()
         {
@@ -53,22 +85,22 @@ namespace AppGraZaDuzoZaMaloCLI
                 {
                     propozycja = widok.WczytajPropozycje();
                 }
-                catch(KoniecGryException)
+                catch (KoniecGryException)
                 {
                     gra.Przerwij();
-
+                    ZakonczGre();
                 }
 
 
                 Console.WriteLine(propozycja);
-  
+
 
 
                 if (gra.StatusGry == Gra.Status.Poddana) break;
 
                 //Console.WriteLine( gra.Ocena(propozycja) );
                 //oceń propozycję, break
-                switch( gra.Ocena(propozycja) )
+                switch (gra.Ocena(propozycja))
                 {
                     case ZaDuzo:
                         widok.KomunikatZaDuzo();
@@ -85,7 +117,7 @@ namespace AppGraZaDuzoZaMaloCLI
                 widok.HistoriaGry();
             }
             while (gra.StatusGry == Gra.Status.WTrakcie);
-                      
+
             //if StatusGry == Przerwana wypisz poprawną odpowiedź
             //if StatusGry == Zakończona wypisz statystyki gry
         }
@@ -104,6 +136,9 @@ namespace AppGraZaDuzoZaMaloCLI
             //np. zapisuje stan gry na dysku w celu późniejszego załadowania
             //albo dopisuje wynik do Top Score
             //sprząta pamięć
+
+            ZapiszRozgrywke();
+
             gra = null;
             widok.CzyscEkran(); //komunikat o końcu gry
             widok = null;
@@ -124,13 +159,13 @@ namespace AppGraZaDuzoZaMaloCLI
         /// <exception cref="FormatException"></exception>
         /// <exception cref="OverflowException"></exception>
         /// <returns></returns>
-        public int WczytajLiczbeLubKoniec(string value, int defaultValue )
+        public int WczytajLiczbeLubKoniec(string value, int defaultValue)
         {
-            if( string.IsNullOrEmpty(value) )
+            if (string.IsNullOrEmpty(value))
                 return defaultValue;
 
             value = value.TrimStart().ToUpper();
-            if ( value.Length>0 && value[0].Equals(ZNAK_ZAKONCZENIA_GRY))
+            if (value.Length > 0 && value[0].Equals(ZNAK_ZAKONCZENIA_GRY))
                 throw new KoniecGryException();
 
             //UWAGA: ponizej może zostać zgłoszony wyjątek 
