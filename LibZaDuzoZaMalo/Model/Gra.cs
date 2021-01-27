@@ -73,13 +73,17 @@ namespace GraZaDuzoZaMalo.Model
         /// <summary>
         /// Typ wyliczeniowy opisujący możliwe statusy gry.
         /// </summary>
+ 
         public enum Status
         {
             /// <summary>Status gry ustawiany w momencie utworzenia obiektu gry. Zmiana tego statusu mozliwa albo gdy liczba zostanie odgadnieta, albo jawnie przerwana przez gracza.</summary>
+        
             WTrakcie,
             /// <summary>Status gry ustawiany w momencie odgadnięcia poszukiwanej liczby.</summary>
+       
             Zakonczona,
             /// <summary>Status gry ustawiany w momencie jawnego przerwania gry przez gracza.</summary>
+         
             Poddana
         };
 
@@ -91,7 +95,7 @@ namespace GraZaDuzoZaMalo.Model
         /// <para>Zmiana wartości zmiennej na <see cref="Gra.Status.Poddana"/> po uruchomieniu metody <see cref="Przerwij"/>.</para>
         /// <para>Zmiana wartości zmiennej na <see cref="Gra.Status.Zakonczona"/> w metodzie <see cref="Propozycja(int)"/>, po podaniu poprawnej, odgadywanej liczby.</para>
         /// </remarks>
-        [field: NonSerialized]
+ 
         public Status StatusGry { get; private set; }
 
         [DataMember]
@@ -103,6 +107,7 @@ namespace GraZaDuzoZaMalo.Model
         /// <summary>
         /// Czas rozpoczęcia gry, ustawiany w momencie utworzenia obiektu gry, w konstruktorze. Nie można go już zmodyfikować podczas życia obiektu.
         /// </summary>
+
         public DateTime CzasRozpoczecia { get; }
         public DateTime? CzasZakonczenia { get; private set; }
 

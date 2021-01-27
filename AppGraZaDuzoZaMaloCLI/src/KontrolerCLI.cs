@@ -74,7 +74,7 @@ namespace AppGraZaDuzoZaMaloCLI
             }
             catch (Exception e)
             {
-                throw e;
+                return null;
             }
         }
 
