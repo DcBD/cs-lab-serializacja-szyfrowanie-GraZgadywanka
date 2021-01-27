@@ -21,6 +21,12 @@ namespace AppGraZaDuzoZaMaloCLI
 
         public void KomunikatPowitalny() => WriteLine("Wylosowałem liczbę z zakresu ");
 
+        public void KomunikatBlednyZapis() => WriteLine("Zapis gry jest błędny, rozpoczynanie nowej gry.");
+
+        public void KomunikatNieZnalezionoZapisu() => WriteLine("Zapis gry nie mógł zostać odnaleziony, rozpoczynanie nowej gry.");
+
+        public void KomunikatWczytajZapis() => WriteLine("Jest możliwe odtworzenie stanu z poprzedniego uruchomienia: ");
+
         public int WczytajPropozycje()
         {
             int wynik = 0;
@@ -64,7 +70,7 @@ namespace AppGraZaDuzoZaMaloCLI
         public void OpisGry()
         {
             WriteLine("Gra w \"Za dużo za mało\"." + Environment.NewLine
-                + "Twoimm zadaniem jest odgadnąć liczbę, którą wylosował komputer." + Environment.NewLine + "Na twoje propozycje komputer odpowiada: za dużo, za mało albo trafiłeś");
+                + "Twoim zadaniem jest odgadnąć liczbę, którą wylosował komputer." + Environment.NewLine + "Na twoje propozycje komputer odpowiada: za dużo, za mało albo trafiłeś");
         }
 
         public bool ChceszKontynuowac( string prompt )

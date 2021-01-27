@@ -6,22 +6,23 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
+using GraZaDuzoZaMalo;
 using GraZaDuzoZaMalo.Model;
 
 using static GraZaDuzoZaMalo.Model.Gra.Odpowiedz;
 
 namespace AppGraZaDuzoZaMaloCLI
 {
-    [Serializable]
+
     public class KontrolerCLI
     {
         public const char ZNAK_ZAKONCZENIA_GRY = 'X';
-        public const string SAVE_FILENAME = @"./ZaDuzoZaMalo.bin";
+        public const string SAVE_FILENAME = @"./ZaDuzoZaMalo.xml";
 
         private Gra gra;
 
 
-     
+
         private WidokCLI widok;
 
 
@@ -29,12 +30,13 @@ namespace AppGraZaDuzoZaMaloCLI
 
         public int MaxZakres { get; private set; } = 100;
 
-        private bool CanLoadGame => File.Exists(SAVE_FILENAME);
+        private bool IsSaveFile => File.Exists(SAVE_FILENAME);
+
 
 
         public IReadOnlyList<Gra.Ruch> ListaRuchow
         {
-           
+
             get
             { return gra.ListaRuchow; }
         }
@@ -51,31 +53,76 @@ namespace AppGraZaDuzoZaMaloCLI
         public void Uruchom()
         {
             widok.OpisGry();
-            widok.HistoriaGry();
             while (widok.ChceszKontynuowac("Czy chcesz kontynuować aplikację (t/n)? "))
                 UruchomRozgrywke();
         }
 
         public void ZapiszRozgrywke()
         {
-            Console.WriteLine("Zapisywanie rozgrywki..");
-            IFormatter formatter = new BinaryFormatter();
-            using (Stream stream = new FileStream(SAVE_FILENAME, FileMode.Create, FileAccess.Write))
+            //BinarySerialization.SerializeToFile<Gra>(gra, SAVE_FILENAME);
+            DataContractSerialization.SerializeToFile<Gra>(gra, SAVE_FILENAME);
+        }
+
+
+        private Gra ZapisanaRozgrywka()
+        {
+            try
             {
-                formatter.Serialize(stream, this);
+                //return BinarySerialization.DeserializeFromFile<Gra>(SAVE_FILENAME);
+                return DataContractSerialization.DeserializeFromFile<Gra>(SAVE_FILENAME);
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
+        private void WczytajRozgrywke()
+        {
+            Gra savedGame = ZapisanaRozgrywka();
+
+            if (savedGame != null)
+            {
+                gra = savedGame;
+
+                widok.KomunikatWczytajZapis();
+                widok.HistoriaGry();
+
+                if (!widok.ChceszKontynuowac("Czy chcesz kontynuować rozgrywkę od poprzedniego stanu (t/n)? "))
+                {
+                    UsunZapis();
+                    RozpocznijNowaRozgrywke();
+                }
             }
 
         }
-
         
+
+        private void UsunZapis()
+        {
+            if (IsSaveFile)
+            {
+                File.Delete(SAVE_FILENAME);
+            }
+        }
+
+
+
+        private void RozpocznijNowaRozgrywke()
+        {
+            gra = new Gra(MinZakres, MaxZakres);
+        }
 
         public void UruchomRozgrywke()
         {
             widok.CzyscEkran();
-            // ustaw zakres do losowania
-
-
-            gra = new Gra(MinZakres, MaxZakres); //może zgłosić ArgumentException
+  
+            // Sprobuj wczytac rozgrywke lub rozpocznij nowa.
+            if (IsSaveFile)
+                { WczytajRozgrywke(); } 
+            else 
+                { RozpocznijNowaRozgrywke(); };
 
             do
             {

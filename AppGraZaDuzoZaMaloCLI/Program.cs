@@ -17,33 +17,14 @@ namespace AppGraZaDuzoZaMaloCLI
         {
 
 
-            if (File.Exists(KontrolerCLI.SAVE_FILENAME))
-            {
-                Console.WriteLine("Wczytywanie rozgrywki z pliku binarnego :)");
-                
-                WczytajRozgrywke().Uruchom();
-            }
-            else
-            {
-                (new KontrolerCLI()).Uruchom();
-
-            }
+            (new KontrolerCLI()).Uruchom();
 
 
 
         }
 
 
-        public static KontrolerCLI WczytajRozgrywke()
-        {
-            using Stream stream = File.OpenRead(KontrolerCLI.SAVE_FILENAME);
 
-            BinaryFormatter deserializer = new BinaryFormatter();
-
-            KontrolerCLI kontroler = (KontrolerCLI)deserializer.Deserialize(stream);
-
-            return kontroler;
-        }
 
 
 

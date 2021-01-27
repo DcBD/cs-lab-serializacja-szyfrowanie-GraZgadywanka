@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,6 +47,7 @@ namespace GraZaDuzoZaMalo.Model
     /// </para>
     /// </remarks>
     [Serializable]
+    [DataContract]
     public class Gra
     {
         /// <summary>
@@ -64,7 +66,7 @@ namespace GraZaDuzoZaMalo.Model
         /// </value>
         public int MinLiczbaDoOdgadniecia { get; } = 1;
 
-
+        [DataMember]
         readonly private int liczbaDoOdgadniecia;
 
 
@@ -92,7 +94,7 @@ namespace GraZaDuzoZaMalo.Model
         [field: NonSerialized]
         public Status StatusGry { get; private set; }
 
-
+        [DataMember]
         private List<Ruch> listaRuchow;
 
 
