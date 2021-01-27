@@ -76,15 +76,14 @@ namespace GraZaDuzoZaMalo.Model
  
         public enum Status
         {
-            /// <summary>Status gry ustawiany w momencie utworzenia obiektu gry. Zmiana tego statusu mozliwa albo gdy liczba zostanie odgadnieta, albo jawnie przerwana przez gracza.</summary>
-        
+            /// <summary>Status gry ustawiany w momencie utworzenia obiektu gry. Zmiana tego statusu mozliwa albo gdy liczba zostanie odgadnieta, albo jawnie przerwana przez gracza.</summary>       
             WTrakcie,
-            /// <summary>Status gry ustawiany w momencie odgadnięcia poszukiwanej liczby.</summary>
-       
+            /// <summary>Status gry ustawiany w momencie odgadnięcia poszukiwanej liczby.</summary>       
             Zakonczona,
-            /// <summary>Status gry ustawiany w momencie jawnego przerwania gry przez gracza.</summary>
-         
-            Poddana
+            /// <summary>Status gry ustawiany w momencie jawnego przerwania gry przez gracza.</summary>     
+            Poddana,
+
+            Zawieszona
         };
 
         /// <summary>

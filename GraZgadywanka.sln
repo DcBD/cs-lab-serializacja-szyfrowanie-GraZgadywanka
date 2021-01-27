@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGraZaDuzoZaMalo", "AppGr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraZaDuzoZaMalo", "LibZaDuzoZaMalo\GraZaDuzoZaMalo.csproj", "{01ABC436-2FE2-4D7B-9B65-FA2A0A49E484}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZaDuzoZaMaloBinary", "ZaDuzoZaMaloBinary\ZaDuzoZaMaloBinary.csproj", "{4328142F-C0C1-4557-A5C9-4B7B7D81E3BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{01ABC436-2FE2-4D7B-9B65-FA2A0A49E484}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01ABC436-2FE2-4D7B-9B65-FA2A0A49E484}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01ABC436-2FE2-4D7B-9B65-FA2A0A49E484}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4328142F-C0C1-4557-A5C9-4B7B7D81E3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4328142F-C0C1-4557-A5C9-4B7B7D81E3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4328142F-C0C1-4557-A5C9-4B7B7D81E3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4328142F-C0C1-4557-A5C9-4B7B7D81E3BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

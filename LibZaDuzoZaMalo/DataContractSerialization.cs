@@ -16,8 +16,6 @@ namespace GraZaDuzoZaMalo
 
             Aes key = Encryptor.GetKey();
  
-            
-
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.PreserveWhitespace = true;
             xmlDoc.Load(fileName);
@@ -31,6 +29,7 @@ namespace GraZaDuzoZaMalo
             XmlDictionaryReader reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas());
             
             stream.Flush();
+         
 
             DataContractSerializer serializer = new DataContractSerializer(typeof(T));
 

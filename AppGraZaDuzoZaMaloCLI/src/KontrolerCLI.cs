@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using GraZaDuzoZaMalo;
 using GraZaDuzoZaMalo.Model;
@@ -32,7 +33,7 @@ namespace AppGraZaDuzoZaMaloCLI
 
         private bool IsSaveFile => File.Exists(SAVE_FILENAME);
 
-
+        private Thread AutoZapisThread { get; set; }
 
         public IReadOnlyList<Gra.Ruch> ListaRuchow
         {
@@ -59,6 +60,7 @@ namespace AppGraZaDuzoZaMaloCLI
 
         public void ZapiszRozgrywke()
         {
+         
             //BinarySerialization.SerializeToFile<Gra>(gra, SAVE_FILENAME);
             DataContractSerialization.SerializeToFile<Gra>(gra, SAVE_FILENAME);
         }
@@ -97,7 +99,24 @@ namespace AppGraZaDuzoZaMaloCLI
             }
 
         }
-        
+
+        private void AutoZapis()
+        {
+            while(gra.StatusGry == Gra.Status.WTrakcie)
+            {
+                Thread.Sleep(10000);
+          
+                ZapiszRozgrywke();
+            }
+
+        }
+
+        private void RozpocznijAutoZapis()
+        {
+            AutoZapisThread = new Thread(new ThreadStart(AutoZapis));
+
+            AutoZapisThread.Start();
+        } 
 
         private void UsunZapis()
         {
@@ -117,12 +136,15 @@ namespace AppGraZaDuzoZaMaloCLI
         public void UruchomRozgrywke()
         {
             widok.CzyscEkran();
-  
+        
             // Sprobuj wczytac rozgrywke lub rozpocznij nowa.
             if (IsSaveFile)
                 { WczytajRozgrywke(); } 
             else 
                 { RozpocznijNowaRozgrywke(); };
+
+
+            RozpocznijAutoZapis();
 
             do
             {
